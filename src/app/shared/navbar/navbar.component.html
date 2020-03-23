@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+    <mat-toolbar-row>
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" *ngIf="_init.currentUser">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+        <span>{{ _init.currentUser ? _init.currentUser['hcInfo']['Nombre_Corto'] : '' }}</span>
+        <span class="example-spacer"></span>
+        <mat-icon class="text-success" aria-hidden="false" aria-label="Example heart icon" (click)="logout()" *ngIf="_token.token">person</mat-icon>
+        <mat-icon class="" aria-hidden="false" aria-label="Example delete icon" (click)="login()" *ngIf="!_token.token">person_outline</mat-icon>
+    </mat-toolbar-row>
+</mat-toolbar>
+
+
+<mat-menu #menu="matMenu">
+    <button mat-menu-item>
+        <mat-icon>speaker_notes</mat-icon>
+        <span>Mis Conversaciones</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>speaker_notes_off</mat-icon>
+        <span>Conversacioens sin asignar</span>
+    </button>
+    <button mat-menu-item>
+        <mat-icon>all_inbox</mat-icon>
+        <span>Todas las conversaciones</span>
+    </button>
+</mat-menu>

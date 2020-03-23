@@ -1,0 +1,23 @@
+.parentWindow {
+    background-image: url("/assets/wabg.png");
+    background-size: contain;
+    height: 100%;
+    overflow: hidden;
+}
+
+.mainWindow {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 95%;
+    overflow: auto;
+    padding-bottom: 90px;
+}
+
+.footerComponent {
+    background-color: crimson;
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 75px;
+}

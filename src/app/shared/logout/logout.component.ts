@@ -22,7 +22,7 @@ export class LogoutComponent implements OnInit {
 
   constructor(
                 private _api:ApiService,
-                private _init:InitService,
+                public _init:InitService,
                 private _token:TokenCheckService,
                 private _zh:ZonaHorariaService,
                 public toastr: ToastrService
@@ -109,6 +109,6 @@ export class LogoutComponent implements OnInit {
           console.error(err.statusText, error.msg)
 
         })
-  } 
+  }
 
 }

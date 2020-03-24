@@ -5,3 +5,7 @@
 .example-spacer {
     flex: 1 1 auto;
 }
+
+.mat-icon {
+    margin-left: 10px;
+}

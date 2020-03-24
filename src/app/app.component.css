@@ -10,8 +10,14 @@
     flex-direction: column;
     width: 100%;
     height: 95%;
-    overflow: auto;
+    overflow: hidden;
     padding-bottom: 90px;
+}
+
+.whiteBg {
+    background-color: #f9f9f9 !important;
+    height: 100%;
+    overflow: hidden;
 }
 
 .footerComponent {
@@ -20,4 +26,12 @@
     bottom: 0px;
     width: 100%;
     height: 75px;
+}
+
+.goToBottomButton {
+    position: fixed;
+    bottom: 65px;
+    width: 100%;
+    height: 75px;
+    z-index: 1000;
 }

@@ -8,6 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { KeysPipe } from './pipes/keys.pipe';
+
 
 // MATERIAL MODULES
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -16,6 +18,10 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatListModule} from '@angular/material/list';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatBadgeModule} from '@angular/material/badge';
 
 // SERVICES
 import { LoginService, TokenCheckService, ApiService, InitService, WhatsappService } from './services/service.index';
@@ -26,6 +32,9 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { LoginComponent } from './shared/login/login.component';
 import { LogoutComponent } from './shared/logout/logout.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ConvListComponent } from './components/whatsapp/conv-list/conv-list.component';
+import { OrderModule } from 'ngx-order-pipe';
+import { ChatWindowComponent } from './components/whatsapp/chat-window/chat-window.component';
 
 
 
@@ -36,6 +45,9 @@ import { ToastrModule } from 'ngx-toastr';
     NavbarComponent,
     LoginComponent,
     LogoutComponent,
+    ConvListComponent,
+    ChatWindowComponent,
+    KeysPipe
 
   ],
   imports: [
@@ -48,11 +60,16 @@ import { ToastrModule } from 'ngx-toastr';
     MatButtonModule,
     MatProgressBarModule,
     MatCheckboxModule,
+    MatDividerModule,
+    MatListModule,
+    MatProgressSpinnerModule,
+    MatBadgeModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
-    CommonModule
+    CommonModule,
+    OrderModule
   ],
   providers: [
     InitService,

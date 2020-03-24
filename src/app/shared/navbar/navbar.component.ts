@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 import { TokenCheckService, InitService, WhatsappService } from '../../services/service.index';
 
 declare var jQuery:any;
@@ -10,7 +12,8 @@ declare var jQuery:any;
 })
 export class NavbarComponent implements OnInit {
 
-  constructor( public _init:InitService, public _token:TokenCheckService ) { }
+  constructor( public _init:InitService, public _token:TokenCheckService, public _wa:WhatsappService, public _route:Router,
+               private location: Location ) { }
 
   ngOnInit() {
     window.setTimeout( () => {
@@ -26,6 +29,15 @@ export class NavbarComponent implements OnInit {
 
   logout(){
     jQuery('#logOutModal').modal('show')
+  }
+
+  isChat( t ){
+    let exp = /chat/gm
+    return t.match(exp)
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 }

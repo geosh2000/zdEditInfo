@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-between align-items-center" *ngIf="!loading['reading']">
+
+    <!-- <button mat-icon-button (click)="showEmoji = !showEmoji">
+        <mat-icon>sentiment_satisfied_alt</mat-icon>
+    </button> -->
+
+    <textarea #note id='note' rows="1" (keyup)="auto_grow(note)" [readonly]="_wa.chatMsgs == {}"></textarea>
+    <button mat-icon-button (click)="submit()" [disabled]="msgSend == '' ||  _wa.chatMsgs == {}">
+            <mat-icon>send</mat-icon>
+    </button>
+</div>
+<div class="d-flex justify-content-between align-items-center" *ngIf="loading['reading']">
+    <mat-progress-bar color="accent" mode="buffer"></mat-progress-bar>
+</div>
+
+<!-- <emoji-mart [style]="{ position: 'absolute', bottom: '20px'}" (emojiSelect)="addEmoji($event)" *ngIf="showEmoji"></emoji-mart> -->

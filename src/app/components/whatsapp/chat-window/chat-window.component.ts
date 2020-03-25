@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { WhatsappService } from '../../../services/service.index';
 
 import * as moment from 'moment-timezone';
@@ -11,6 +11,8 @@ declare var jQuery: any;
   styleUrls: ['./chat-window.component.css']
 })
 export class ChatWindowComponent implements OnInit, OnDestroy {
+
+  windowHeight = 5
 
   constructor( private activatedRoute: ActivatedRoute, public _wa:WhatsappService, public _route:Router ) {
     this.activatedRoute.params.subscribe( params => {
@@ -28,11 +30,15 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._wa.reloadChat = true
     this._wa.chatMsgs = []
+
+    this.windowHeight = window.innerHeight -  jQuery('#topMenu').innerHeight() -  jQuery('#bottomBar').innerHeight()
   }
 
   ngOnDestroy(){
     this._wa.lastUrl = this._route.url
     this._wa.reloadChat = false
+    this._wa.chatInfo = {}
+    jQuery('.modal').modal('hide')
   }
 
   formatTime( t, f ){

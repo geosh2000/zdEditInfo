@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" id='topMenu'>
     <mat-toolbar-row>
 
         <button mat-icon-button [routerLink]="[_wa.lastUrl]" aria-label="Example icon-button with a menu" *ngIf="_init.currentUser && isChat(_route.url)">
@@ -35,6 +35,10 @@
 
 <mat-menu #moreConv="matMenu">
     <button mat-menu-item>
+        <mat-icon>shopping_cart</mat-icon>
+        <span>Cotizar</span>
+    </button>
+    <button mat-menu-item (click)="info()">
         <mat-icon>info</mat-icon>
         <span>Info Cliente</span>
     </button>
@@ -42,8 +46,24 @@
         <mat-icon>sync_alt</mat-icon>
         <span>Reasignar</span>
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item data-toggle="modal" data-target="#closeTicketModal">
         <mat-icon>unsubscribe</mat-icon>
         <span>Cerrar Ticket</span>
     </button>
+    <mat-divider></mat-divider>
+    <mat-list>
+
+        <div class='p-3' style="width: 100%">
+            <div class="d-flex justify-content-between" style="width: 100%; font-size: small;">
+                <p>Ticket:</p>
+                <p><a href="" target="_blank">#{{ _wa.chatInfo['ticketId'] }}</a></p>
+            </div>
+            <div class="d-flex justify-content-between" style="width: 100%; font-size: small;">
+                <p>Asig:</p>
+                <p class='text-primary'>{{ _wa.chatInfo['agentName'] }}</p>
+            </div>
+        </div>
+
+    </mat-list>
 </mat-menu>
+<app-info-cliente></app-info-cliente>

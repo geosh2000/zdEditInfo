@@ -1,0 +1,24 @@
+<div class="modal fade" id="closeTicketModal" tabindex="-1" role="dialog" aria-labelledby="closeTicketModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="closeTicketModalLabel">Cerrar Ticket</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body d-flex justify-content-center">
+                <p>Seguro que deseas cerrar el ticket?</p>
+            </div>
+            <div class="modal-footer">
+                <ng-container *ngIf="!loading['closing']">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" (click)="closeTkt()">Cerrar</button>
+                </ng-container>
+                <ng-container *ngIf="loading['closing']">
+                    <mat-progress-bar mode="buffer"></mat-progress-bar>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

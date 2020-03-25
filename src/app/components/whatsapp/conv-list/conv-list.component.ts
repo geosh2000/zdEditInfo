@@ -17,6 +17,7 @@ export class ConvListComponent implements OnInit, OnDestroy {
   loading:Object = {}
   selected = ''
   timeout:any
+  windowHeight = 500
 
   constructor(
                 private activatedRoute: ActivatedRoute,
@@ -44,10 +45,13 @@ export class ConvListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._wa.reloadTickets = true
     this._wa.lastUrl = this._route.url
+
+    this.windowHeight = window.innerHeight -  jQuery('#topMenu').innerHeight()
   }
 
   ngOnDestroy(){
     this._wa.reloadTickets = false
+    jQuery('.modal').modal('hide')
   }
 
 
@@ -95,6 +99,7 @@ export class ConvListComponent implements OnInit, OnDestroy {
 
   goToChat( t ){
     this._wa.title = t['reqName']
+    this._wa.chatInfo['agentName'] = t['agentName']
     this._route.navigate([`/chat/${t['ticketId']}`]);
   }
 

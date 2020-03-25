@@ -1,5 +1,5 @@
 .parentWindow {
-    background-image: url("/assets/wabg.png");
+    background-image: url("/whatsapp/assets/wabg.png");
     background-size: contain;
     height: 100%;
     overflow: hidden;
@@ -21,11 +21,11 @@
 }
 
 .footerComponent {
-    background-color: crimson;
+    min-height: 40px;
+    background-color: #c2dadc;
     position: fixed;
     bottom: 0px;
     width: 100%;
-    height: 75px;
 }
 
 .goToBottomButton {

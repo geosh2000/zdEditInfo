@@ -134,6 +134,8 @@ export class WhatsappService {
                   this.chatInfo['requester'] = res['data'][0]['reqName']
                   this.chatInfo['phone'] = res['data'][0]['reqPhone']
                   this.chatInfo['rqId'] = res['data'][0]['zdId']
+                  this.chatInfo['agentName'] = res['data'][0]['asignado']
+                  this.chatInfo['ticketId'] = loc
                   // let url = 'https://material.angular.io/assets/img/examples/shiba1.jpg'
                   // jQuery('.client-image').css('background-image', 'url(' + url + ')');
 

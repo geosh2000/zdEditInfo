@@ -2,7 +2,7 @@
     <a href="#bottomTgt" id="link" hidden>Link</a>
     <div class="container p-0 m-0" style="padding-bottom: 5rem!important; min-height: 660px; overflow: auto" id="chatWdw">
 
-        <div class="cht" (scroll)="onScroll($event)">
+        <div class="cht" (scroll)="onScroll($event)" [style.height.px]="windowHeight">
             <ng-container>
                 <ng-container *ngFor="let d of _wa.chatMsgs | keys">
                     <div class="d-flex justify-content-center">
@@ -16,7 +16,10 @@
                                     <a [href]="c['attachments'][0]['content_url']" target="_blank"><img [src]="c['attachments'][0]['thumbnails'][0]['content_url']" alt="attachment" [height]="c['attachments'][0]['thumbnails'][0]['height']" [width]="c['attachments'][0]['thumbnails'][0]['width']"></a>
                                 </div>
                                 <div class="mr-auto" *ngSwitchCase="'audio/ogg'">
-                                    <!-- <mat-basic-audio-player [audioUrl]="c['attachments'][0]['content_url']" title="audio" [displayTitle]="false" [displayVolumeControls]="false"></mat-basic-audio-player> -->
+                                    <mat-basic-audio-player [audioUrl]="c['attachments'][0]['content_url']" title="audio" [displayTitle]="false" [displayVolumeControls]="false"></mat-basic-audio-player>
+                                </div>
+                                <div class="mr-auto" *ngSwitchCase="'audio/mpeg'">
+                                    <mat-basic-audio-player [audioUrl]="c['attachments'][0]['content_url']" title="audio" [displayTitle]="false" [displayVolumeControls]="false"></mat-basic-audio-player>
                                 </div>
                                 <div *ngSwitchCase="'application/pdf'">
                                     <a [href]="c['attachments'][0]['content_url']" target="_blank">{{ c['attachments'][0]['file_name'] }}</a>
@@ -36,6 +39,7 @@
         </div>
 
     </div>
+
     <!-- <div class="p-2 footer ">
         <div *ngIf="previewSrc">
             <p>

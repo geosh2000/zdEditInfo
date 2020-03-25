@@ -1,0 +1,22 @@
+textarea {
+    resize: none;
+    overflow: hidden;
+    width: 90%;
+    border-radius: 17px;
+    padding: 6px;
+    overflow: hidden;
+}
+
+.mat-fab {
+    width: 40px;
+    height: 40px;
+}
+
+.mat-button-wrapper {
+    padding: 0px !important;
+}
+
+.mat-menu-panel {
+    height: 0px;
+    max-width: 1000px !important;
+}

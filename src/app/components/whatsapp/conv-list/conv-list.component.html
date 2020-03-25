@@ -1,4 +1,4 @@
-<div class='p-2' style='padding-bottom: 10% !important; height: 13%; overflow: auto; min-height: 260px;'>
+<div class='p-2' style='padding-bottom: 10% !important; overflow: auto; min-height: 260px;' [style.height.px]="windowHeight" id="convWindow">
     <div class="alert alert-primary" role="alert" *ngIf="_wa.tickets.length == 0">
         No hay conversaciones para mostrar
     </div>

@@ -3,6 +3,8 @@ import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { NgxAudioPlayerModule } from 'ngx-audio-player';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +24,10 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 // SERVICES
 import { LoginService, TokenCheckService, ApiService, InitService, WhatsappService } from './services/service.index';
@@ -35,6 +41,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { ConvListComponent } from './components/whatsapp/conv-list/conv-list.component';
 import { OrderModule } from 'ngx-order-pipe';
 import { ChatWindowComponent } from './components/whatsapp/chat-window/chat-window.component';
+import { WriteMsgComponent } from './components/whatsapp/write-msg/write-msg.component';
+import { CloseTicketComponent } from './components/whatsapp/close-ticket/close-ticket.component';
+import { InfoClienteComponent } from './components/whatsapp/info-cliente/info-cliente.component';
+import { AssignTicketComponent } from './components/whatsapp/assign-ticket/assign-ticket.component';
 
 
 
@@ -47,7 +57,11 @@ import { ChatWindowComponent } from './components/whatsapp/chat-window/chat-wind
     LogoutComponent,
     ConvListComponent,
     ChatWindowComponent,
-    KeysPipe
+    KeysPipe,
+    WriteMsgComponent,
+    CloseTicketComponent,
+    InfoClienteComponent,
+    AssignTicketComponent
 
   ],
   imports: [
@@ -64,12 +78,18 @@ import { ChatWindowComponent } from './components/whatsapp/chat-window/chat-wind
     MatListModule,
     MatProgressSpinnerModule,
     MatBadgeModule,
+    MatTabsModule,
+    MatChipsModule,
+    MatFormFieldModule,
+    MatInputModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
     ToastrModule.forRoot(),
     CommonModule,
-    OrderModule
+    OrderModule,
+    NgxAudioPlayerModule,
+    PickerModule,
   ],
   providers: [
     InitService,

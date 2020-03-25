@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TokenCheckService, InitService, WhatsappService } from '../../services/service.index';
+import { InfoClienteComponent } from '../../components/whatsapp/info-cliente/info-cliente.component';
 
 declare var jQuery:any;
 
@@ -11,6 +12,8 @@ declare var jQuery:any;
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+
+  @ViewChild(InfoClienteComponent, {static: false}) _info:InfoClienteComponent
 
   constructor( public _init:InitService, public _token:TokenCheckService, public _wa:WhatsappService, public _route:Router,
                private location: Location ) { }
@@ -38,6 +41,10 @@ export class NavbarComponent implements OnInit {
 
   goBack() {
     this.location.back();
+  }
+
+  info(){
+    this._info.openInfo()
   }
 
 }

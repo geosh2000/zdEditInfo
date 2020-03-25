@@ -81,9 +81,9 @@ textarea {
 }
 
 .cht {
-    height: 95%;
+    /* height: 95%; */
     width: 100%;
     position: fixed;
     overflow: auto;
-    padding-bottom: 25%;
+    /* padding-bottom: 25%; */
 }

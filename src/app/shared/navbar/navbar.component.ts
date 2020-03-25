@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TokenCheckService, InitService, WhatsappService } from '../../services/service.index';
 import { InfoClienteComponent } from '../../components/whatsapp/info-cliente/info-cliente.component';
+import { AssignTicketComponent } from '../../components/whatsapp/assign-ticket/assign-ticket.component';
 
 declare var jQuery:any;
 
@@ -14,6 +15,7 @@ declare var jQuery:any;
 export class NavbarComponent implements OnInit {
 
   @ViewChild(InfoClienteComponent, {static: false}) _info:InfoClienteComponent
+  @ViewChild(AssignTicketComponent, {static: false}) _assign:AssignTicketComponent
 
   constructor( public _init:InitService, public _token:TokenCheckService, public _wa:WhatsappService, public _route:Router,
                private location: Location ) { }
@@ -45,6 +47,10 @@ export class NavbarComponent implements OnInit {
 
   info(){
     this._info.openInfo()
+  }
+
+  assign(){
+    this._assign.openAssign()
   }
 
 }

@@ -28,6 +28,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 
 // SERVICES
 import { LoginService, TokenCheckService, ApiService, InitService, WhatsappService } from './services/service.index';
@@ -82,6 +83,7 @@ import { AssignTicketComponent } from './components/whatsapp/assign-ticket/assig
     MatChipsModule,
     MatFormFieldModule,
     MatInputModule,
+    MatSelectModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,

@@ -1,1 +1,37 @@
-<p>assign-ticket works!</p>
+<div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="assignModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="assignModalLabel">Asignar Ticket</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body d-flex justify-content-center" *ngIf="!loading['users']">
+                <h6>Selecciona un Agente</h6>
+                <mat-form-field>
+                    <mat-label>Agentes Zendesk</mat-label>
+                    <mat-select (selectionChange)="selectedAg($event)">
+                        <ng-container *ngFor="let ag of users">
+                            <mat-option [value]="ag" *ngIf="ag.nCorto != _wa.chatInfo['agentName']">
+                                {{ ag.nCorto }}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="modal-body d-flex justify-content-center" *ngIf="loading['users']">
+                <mat-progress-bar mode="buffer"></mat-progress-bar>
+            </div>
+            <div class="modal-footer">
+                <ng-container *ngIf="!loading['assign']">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-danger" (click)="assignTkt()" [disabled]="!agent">Asignar</button>
+                </ng-container>
+                <ng-container *ngIf="loading['assign']">
+                    <mat-progress-bar mode="buffer"></mat-progress-bar>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

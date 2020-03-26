@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 
 declare var jQuery: any;
 import * as moment from 'moment-timezone';
+import { FormGroup } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +29,10 @@ export class WhatsappService {
   chatInfo = {}
   newMsgs = 0
   bottomFlag = true
+
+  // Attachments
+  imageForm: FormGroup
+  imageFileUp: File
 
   constructor( private _init:InitService, private _api:ApiService, private orderPipe: OrderPipe, private toastr:ToastrService ) { }
 
@@ -220,5 +225,34 @@ export class WhatsappService {
                   console.error(err.statusText, error.msg);
 
                 });
+  }
+
+  attach( image_file ){
+    this.loading['attach'] = true
+    let Image = image_file.nativeElement
+
+    if( Image.files && Image.files[0] ){
+      this.imageFileUp = Image.files[0]
+    }
+
+    let ImageFile: File = this.imageFileUp
+
+    let formData: FormData = new FormData()
+    formData.append( 'fname', this.imageForm.controls['fname'].value)
+    formData.append( 'dir',   this.imageForm.controls['dir'].value)
+    formData.append( 'ftype', this.imageForm.controls['ftype'].value)
+    formData.append( 'image', ImageFile, ImageFile.name)
+
+    this._api.restfulImgPost( formData, 'UploadImage/uploadImage' )
+              .subscribe( res => {
+
+                  jQuery('#attachModal').modal('hide')
+                  this.loading['attach'] = false
+                  console.log(res)
+              }, err => {
+                  this.loading['attach'] = false
+                  console.log('ERROR', err)
+                })
+
   }
 }

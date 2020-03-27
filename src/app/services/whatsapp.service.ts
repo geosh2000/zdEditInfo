@@ -48,9 +48,11 @@ export class WhatsappService {
 
     switch( s ){
       case '0':
+      case 0:
         this.title = 'Sin Asignar'
         break
       case '1':
+      case 1:
         this.title = 'Todas las conversaciones'
         break
       default:

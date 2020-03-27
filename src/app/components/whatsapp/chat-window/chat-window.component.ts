@@ -17,6 +17,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
   @ViewChild(ImageModalComponent, {static: false}) _img:ImageModalComponent
 
   windowHeight = 5
+  chatHeight = 660
   param = {value: 'mundo'}
   tr:any
 
@@ -39,6 +40,7 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
     this._wa.chatMsgs = []
 
     this.windowHeight = window.innerHeight -  jQuery('#topMenu').innerHeight() -  jQuery('#bottomBar').innerHeight() - (this._wa.zdesk ? 70 : 0)
+    this.chatHeight = window.innerHeight - 40
   }
 
   ngOnDestroy(){

@@ -1,6 +1,6 @@
 <div class="container p-0 m-0 staticBg">
     <a href="#bottomTgt" id="link" hidden>Link</a>
-    <div class="container p-0 m-0" style="padding-bottom: 5rem!important; min-height: 660px; overflow: auto" id="chatWdw">
+    <div class="container p-0 m-0" style="padding-bottom: 5rem!important; min-height: 660px; overflow: hidden" [style.height.px]="chatHeight" id="chatWdw">
 
         <div class="cht" (scroll)="onScroll($event)" [style.height.px]="windowHeight" id="chatWindow">
             <ng-container>

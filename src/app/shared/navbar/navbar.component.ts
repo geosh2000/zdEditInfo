@@ -55,5 +55,16 @@ export class NavbarComponent implements OnInit {
     this._assign.openAssign()
   }
 
+  setFilter( t ){
+
+    if( this._wa.zdesk ){
+      this._wa.reloadTickets = true
+      this._wa.getTickets( t )
+    }else{
+      this._route.navigate(['/app', t > 1 ? '' : t])
+    }
+
+  }
+
 
 }

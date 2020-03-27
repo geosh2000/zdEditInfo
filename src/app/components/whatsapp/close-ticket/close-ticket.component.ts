@@ -33,7 +33,14 @@ export class CloseTicketComponent implements OnInit {
         .subscribe( res => {
 
           this.loading['closing'] = false;
-          this._route.navigate([this._wa.lastUrl]);
+
+          if( this._wa.zdesk ){
+            this._wa.reloadChat = false
+            this._wa.chatInfo = {}
+            this._wa.chatMsgs = {}
+          }else{
+            this._route.navigate([this._wa.lastUrl]);
+          }
 
         }, err => {
           this.loading['closing'] = false;

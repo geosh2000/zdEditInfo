@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { TokenCheckService, WhatsappService } from './services/service.index';
 import { Router } from '@angular/router';
 
@@ -11,14 +11,21 @@ import * as Globals from './globals';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   title = 'cycWA';
+  chatSize:any
 
   constructor( public _token:TokenCheckService, public _route:Router, public _wa:WhatsappService) {
     this._wa.zdesk = Globals.ZDESK
   }
 
-  ngOnInit(){
+  ngOnInit(){}
+
+  ngAfterViewInit(){
+    if( this._wa.zdesk ){
+      this.chatSize = jQuery('#chatColumn').innerWidth()
+      console.log(jQuery('#chatColumn'))
+    }
   }
 
   isList( t ){

@@ -12,6 +12,9 @@ const routes: Routes = [
   { path: 'app/:id', component: ConvListComponent },
 
   { path: 'chat/:tkt', component: ChatWindowComponent },
+
+  // zendeskInit
+  { path: 'whatsapp/:zdUser', component: ConvListComponent },
 ];
 
 @NgModule({

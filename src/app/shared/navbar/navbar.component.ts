@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TokenCheckService, InitService, WhatsappService } from '../../services/service.index';
@@ -17,8 +17,10 @@ export class NavbarComponent implements OnInit {
   @ViewChild(InfoClienteComponent, {static: false}) _info:InfoClienteComponent
   @ViewChild(AssignTicketComponent, {static: false}) _assign:AssignTicketComponent
 
+  @Input() tipo:any = ''
+
   constructor( public _init:InitService, public _token:TokenCheckService, public _wa:WhatsappService, public _route:Router,
-               private location: Location ) { }
+               private location: Location) { }
 
   ngOnInit() {
     window.setTimeout( () => {
@@ -52,5 +54,6 @@ export class NavbarComponent implements OnInit {
   assign(){
     this._assign.openAssign()
   }
+
 
 }

@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { InitService, ApiService, WhatsappService } from '../../../services/service.index';
 
 import * as moment from 'moment-timezone';
-import { OrderPipe } from 'ngx-order-pipe';
 import { ToastrService } from 'ngx-toastr';
 declare var jQuery: any;
 
@@ -98,9 +97,14 @@ export class ConvListComponent implements OnInit, OnDestroy {
   }
 
   goToChat( t ){
-    this._wa.title = t['reqName']
+    this._wa.chatInfo['requester'] = t['reqName']
     this._wa.chatInfo['agentName'] = t['agentName']
-    this._route.navigate([`/chat/${t['ticketId']}`]);
+
+    if( this._wa.zdesk ){
+      this._wa.getConv( t['ticketId'], true )
+    }else{
+      this._route.navigate([`/chat/${t['ticketId']}`]);
+    }
   }
 
 }

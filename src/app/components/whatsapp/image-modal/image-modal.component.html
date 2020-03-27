@@ -1,0 +1,15 @@
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Imagen Adjunta</h4>
+                <button type="button" class="close" (click)='closeModal()'>
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body p-1">
+                <a [href]="imgSrc" target="_blank"><img alt='image' class='img rounded img-fluid' style='margin: auto;' [src]="imgSrc" [style.maxHeight.px]="maxHeight"></a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -76,6 +76,7 @@ export class WriteMsgComponent implements OnInit {
                   jQuery('#note').val('')
                   jQuery('#note').attr('rows',1)
                   jQuery('#convWindow').innerHeight(window.innerHeight -  jQuery('#topMenu').innerHeight() - jQuery('#bottomBar').innerHeight())
+                  this._wa.scrollBottom()
 
                 }, err => {
 

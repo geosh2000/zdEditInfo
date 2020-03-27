@@ -35,3 +35,9 @@
     height: 75px;
     z-index: 1000;
 }
+
+.zdWindow {
+    width: 880px;
+    height: 720px;
+    overflow: hidden;
+}

@@ -29,10 +29,14 @@ export class WhatsappService {
   chatInfo = {}
   newMsgs = 0
   bottomFlag = true
+  scr = 0
 
   // Attachments
   imageForm: FormGroup
   imageFileUp: File
+
+  // Layout
+  zdesk = false
 
   constructor( private _init:InitService, private _api:ApiService, private orderPipe: OrderPipe, private toastr:ToastrService ) { }
 
@@ -135,7 +139,7 @@ export class WhatsappService {
                 .subscribe( res => {
 
                   this.loading = false;
-                  this.title = res['data'][0]['reqName']
+                  // this.title = res['data'][0]['reqName']
                   this.chatInfo['requester'] = res['data'][0]['reqName']
                   this.chatInfo['phone'] = res['data'][0]['reqPhone']
                   this.chatInfo['rqId'] = res['data'][0]['zdId']
@@ -189,7 +193,7 @@ export class WhatsappService {
 
                   if( ft || this.bottomFlag ){
                      setTimeout( () => {
-                      document.getElementById('link').click();
+                      this.scrollBottom()
                       if(isFocused){
                         jQuery('#note').focus()
                       }
@@ -253,6 +257,17 @@ export class WhatsappService {
                   this.loading['attach'] = false
                   console.log('ERROR', err)
                 })
+
+  }
+
+  scrollBottom(){
+
+    let clh = document.getElementById('chatWindow').clientHeight
+    let dht = document.getElementById('chatWindow').scrollHeight
+
+    document.getElementById('chatWindow').scrollTop = dht - clh
+    this.scr = dht - document.getElementById('chatWindow').scrollTop - clh
+    this.newMsgs = 0
 
   }
 }

@@ -4,13 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { NgxAudioPlayerModule } from 'ngx-audio-player';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { KeysPipe } from './pipes/keys.pipe';
+import { DomseguroPipe } from './pipes/domseguro.pipe';
 
 
 // MATERIAL MODULES
@@ -46,6 +46,8 @@ import { WriteMsgComponent } from './components/whatsapp/write-msg/write-msg.com
 import { CloseTicketComponent } from './components/whatsapp/close-ticket/close-ticket.component';
 import { InfoClienteComponent } from './components/whatsapp/info-cliente/info-cliente.component';
 import { AssignTicketComponent } from './components/whatsapp/assign-ticket/assign-ticket.component';
+import { ImageModalComponent } from './components/whatsapp/image-modal/image-modal.component';
+import { ZdWhatsappComponent } from './components/zendesk/zd-whatsapp/zd-whatsapp.component';
 
 
 
@@ -59,10 +61,13 @@ import { AssignTicketComponent } from './components/whatsapp/assign-ticket/assig
     ConvListComponent,
     ChatWindowComponent,
     KeysPipe,
+    DomseguroPipe,
     WriteMsgComponent,
     CloseTicketComponent,
     InfoClienteComponent,
-    AssignTicketComponent
+    AssignTicketComponent,
+    ImageModalComponent,
+    ZdWhatsappComponent
 
   ],
   imports: [
@@ -91,7 +96,7 @@ import { AssignTicketComponent } from './components/whatsapp/assign-ticket/assig
     CommonModule,
     OrderModule,
     NgxAudioPlayerModule,
-    PickerModule,
+
   ],
   providers: [
     InitService,

@@ -3,7 +3,9 @@ import { WhatsappService } from '../../../services/service.index';
 
 import * as moment from 'moment-timezone';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ImageModalComponent } from '../image-modal/image-modal.component';
 declare var jQuery: any;
+declare var google: any
 
 @Component({
   selector: 'app-chat-window',
@@ -12,26 +14,31 @@ declare var jQuery: any;
 })
 export class ChatWindowComponent implements OnInit, OnDestroy {
 
-  windowHeight = 5
+  @ViewChild(ImageModalComponent, {static: false}) _img:ImageModalComponent
 
-  constructor( private activatedRoute: ActivatedRoute, public _wa:WhatsappService, public _route:Router ) {
+  windowHeight = 5
+  param = {value: 'mundo'}
+  tr:any
+
+  constructor( private activatedRoute: ActivatedRoute, public _wa:WhatsappService, public _route:Router) {
     this.activatedRoute.params.subscribe( params => {
 
-      if ( params.tkt ){
-        this._wa.reloadChat = true
-        this._wa.getConv( params.tkt, true )
-      }else{
-        this._wa.reloadChat = true
-      }
+        if ( params.tkt ){
+          this._wa.reloadChat = true
+          this._wa.getConv( params.tkt, true )
+        }else{
+          this._wa.reloadChat = true
+        }
 
-  });
+    });
+
   }
 
   ngOnInit() {
     this._wa.reloadChat = true
     this._wa.chatMsgs = []
 
-    this.windowHeight = window.innerHeight -  jQuery('#topMenu').innerHeight() -  jQuery('#bottomBar').innerHeight()
+    this.windowHeight = window.innerHeight -  jQuery('#topMenu').innerHeight() -  jQuery('#bottomBar').innerHeight() - (this._wa.zdesk ? 70 : 0)
   }
 
   ngOnDestroy(){
@@ -58,6 +65,8 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
   }
 
   onScroll( e ){
+
+
     let clh = e.target.clientHeight
     let scr = e.target.scrollTop
     let dht = e.target.scrollHeight
@@ -68,6 +77,9 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
     }else{
       this._wa.bottomFlag = false
     }
+
+    this._wa.scr = dht - scr - clh
+
   }
 
 }

@@ -1,16 +1,16 @@
-<div class='p-2' style='padding-bottom: 10% !important; overflow: auto; min-height: 260px;' [style.height.px]="windowHeight" id="convWindow">
+<div class='p-2 convWdw' [style.height.px]="windowHeight" id="convWindow">
     <div class="alert alert-primary" role="alert" *ngIf="_wa.tickets.length == 0">
         No hay conversaciones para mostrar
     </div>
     <mat-list *ngIf="_wa.tickets.length > 0">
         <ng-container *ngFor="let c of _wa.tickets">
             <mat-list-item class="itemList" (mouseenter)="mOver($event)" (mouseleave)="mLeave($event)" (click)="goToChat(c)">
-                <div class="p-1 row m-0">
+                <div class="p-1 row m-0" style='width: 100%; position: relative'>
                     <div class="col-10 p-0">
                         <h6 class="text-truncate" [ngClass]="{'text-success': c['lastIsIn'] == 1}">{{ c['reqName'] }}</h6>
-                        <div class="d-flex justify-content-start" [style.width.px]="300" [style.height.px]="15">
+                        <div class="d-flex justify-content-start" [style.width.%]="100" [style.height.px]="15" [style.position]="'relative'">
                             <div [style.width.px]="50" style="font-size: x-small"><a target="_blank" href="https://oasishoteles.zendesk.com/agent/tickets/{{c['ticketId']}}">{{ c['ticketId'] }}</a></div>
-                            <div class="ml-1 text-truncate" style="font-size: x-small; max-width: 190px;" [innerHTML]="c['lastConv']"></div>
+                            <div class="ml-1 text-truncate" style="font-size: x-small; max-width: calc(100% - 100px); position: relative" [innerHTML]="c['lastConv']"></div>
                         </div>
                     </div>
                     <div class="col-2 text-secondary p-0" style="font-size: xx-small; margin-top:6px; text-align: right">

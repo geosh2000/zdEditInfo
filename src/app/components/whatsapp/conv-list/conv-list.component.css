@@ -79,3 +79,12 @@ textarea {
 .mOver {
     background: #e0e0e0;
 }
+
+.convWdw {
+    overflow: auto;
+    min-height: 260px;
+    padding-bottom: 10% !important;
+    height: calc(100% + 40px);
+    width: 100%;
+    position: relative;
+}

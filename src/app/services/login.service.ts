@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import { InitService } from './init.service';
+import { WhatsappService } from './whatsapp.service';
 import { Router } from '@angular/router';
 import { TokenCheckService } from 'src/app/services/token-check.service';
 
@@ -13,7 +14,7 @@ export class LoginService {
   loginLoad = false
   loginMsg = ''
 
-  constructor( private _api:ApiService, private _init:InitService, private _token:TokenCheckService, private _route:Router) { }
+  constructor( private _api:ApiService, private _init:InitService, private _wa:WhatsappService, private _token:TokenCheckService, private _route:Router) { }
 
   loginCyC( logInfo, sourceUrl ){
     this.loginLoad = true
@@ -34,6 +35,7 @@ export class LoginService {
         this._init.currentUser = JSON.parse(localStorage.getItem('currentUser'))
         this.loginError=false;
         this.loginMsg='';
+        this._wa.getTickets()
         jQuery('#loginModal').modal('hide');
 
         if( res['isAffiliate'] ){

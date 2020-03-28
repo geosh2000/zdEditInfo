@@ -17,19 +17,18 @@ import { Howl } from 'howler';
 export class WhatsappService {
 
   sound = new Howl({
-    src: ['https://cyc-oasishoteles.com/sounds/WhatsApp.mp3'],
+    src: ['/assets/WhatsApp.mp3'],
     volume: 1,
     preload: true
   });
 
   // Navigation
   lastUrl = '/app'
-
+  timeout:Object = {}
   // listConversations
   title = 'Mis Conversaciones'
   loading = false
   tickets = []
-  timeout:any
   reloadTickets = true
   selectedFilter:any
 
@@ -54,11 +53,12 @@ export class WhatsappService {
   }
 
   getTickets( s = this._init.currentUser['hcInfo']['zdId'], to = this.reloadTickets ){
-
+    // console.log('run tickets start')
     this.selectedFilter = s
 
-    if( this.timeout ){
-      clearTimeout(this.timeout)
+    if( this.timeout['tickets'] ){
+      // console.log('clear timeout')
+      clearTimeout(this.timeout['tickets'])
     }
 
     switch( s ){
@@ -76,6 +76,7 @@ export class WhatsappService {
     }
 
     if( !this.reloadTickets && !this.zdesk ){
+      // console.log('run tickets exit before start')
       return true
     }
 
@@ -83,6 +84,7 @@ export class WhatsappService {
 
     this._api.restfulGet( s, 'Whatsapp/listConv' )
                 .subscribe( res => {
+                  // console.log('run tickets loaded')
                   this.loading = false;
                   let tktsO = this.orderPipe.transform(res['data'], 'lastMsg')
                   let tkts = this.orderPipe.transform(tktsO, 'lastIsIn',true)
@@ -107,11 +109,14 @@ export class WhatsappService {
 
                   this.tickets = tkts
 
-                  if( to ){
-                    this.timeout = setTimeout( () => {
+                  if( to || this.zdesk ){
+                    // console.log('run tickets program next run')
+                    this.timeout['tickets'] = setTimeout( () => {
                       this.getTickets( s )
                     },10000)
                   }
+
+                  // console.log('run tickets end width reload flag: ', this.reloadTickets)
 
                 }, err => {
                   this.loading = false;
@@ -119,7 +124,7 @@ export class WhatsappService {
                   this.tickets = []
 
                   if( to ){
-                    this.timeout = setTimeout( () => {
+                    this.timeout['tickets'] = setTimeout( () => {
                       this.getTickets( s )
                     },10000)
                   }
@@ -137,7 +142,7 @@ export class WhatsappService {
       this.newMsgs = 0
     }
 
-    clearTimeout(this.timeout)
+    clearTimeout(this.timeout['chat'])
 
     if( ft ){
       this.chatMsgs = {}
@@ -231,14 +236,14 @@ export class WhatsappService {
                   // }
 
                   if( to ){
-                    this.timeout = setTimeout( () => {
+                    this.timeout['chat'] = setTimeout( () => {
                       this.getConv( loc )
                     },10000)
                   }
 
                 }, err => {
                   if( rl ){
-                    this.timeout = setTimeout( () => {
+                    this.timeout['chat'] = setTimeout( () => {
                       this.getConv( loc )
                     },10000)
                   }
@@ -273,7 +278,7 @@ export class WhatsappService {
 
                   jQuery('#attachModal').modal('hide')
                   this.loading['attach'] = false
-                  console.log(res)
+                  // console.log(res)
               }, err => {
                   this.loading['attach'] = false
                   console.log('ERROR', err)
@@ -291,7 +296,7 @@ export class WhatsappService {
     this.newMsgs = 0
     this.bottomFlag = false
 
-    console.log( 'scrolledBottom', 'flag', this.bottomFlag )
+    // console.log( 'scrolledBottom', 'flag', this.bottomFlag )
 
   }
 
@@ -300,7 +305,7 @@ export class WhatsappService {
     this._api.restfulPut( [t], 'Whatsapp/clearNotif' )
                 .subscribe( res => {
 
-                  console.log('New Notification Done!')
+                  // console.log('New Notification Done!')
 
                 }, err => {
                   const error = err.error;
@@ -315,7 +320,8 @@ export class WhatsappService {
     this._api.restfulPut( t, 'Whatsapp/soundNotif' )
                 .subscribe( res => {
 
-                  console.log('New Notification Done!')
+                  console.log('New Sound Done!')
+                  this.sound.play()
 
                 }, err => {
                   const error = err.error;

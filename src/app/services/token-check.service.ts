@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Observable, Subject } from 'rxjs'
+import { InitService } from 'src/app/services/init.service';
 
 
 
@@ -19,7 +20,7 @@ export class TokenCheckService {
     return this.subject.asObservable()
   }
 
-  constructor(  ) {
+  constructor( private _init:InitService  ) {
     setInterval(()=>{ this.tokenCheck() }  ,1000)
   }
 
@@ -28,6 +29,7 @@ export class TokenCheckService {
 
     // Check token exists
     if( !currentUser ){
+      this._init.currentUser = {}
       this.token = false
       if( this.lastLog ){
         this.token = false

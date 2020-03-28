@@ -99,6 +99,7 @@ export class ConvListComponent implements OnInit, OnDestroy {
   goToChat( t ){
     this._wa.chatInfo['requester'] = t['reqName']
     this._wa.chatInfo['agentName'] = t['agentName']
+    this._wa.assignee = t['assignee']
 
     if( this._wa.zdesk ){
       this._wa.getConv( t['ticketId'], true )

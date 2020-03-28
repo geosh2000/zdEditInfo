@@ -19,7 +19,7 @@ export class ImageModalComponent implements OnInit {
 
   openImage( src ){
     console.log('abrir imagen')
-    this.maxHeight = document.getElementById('chatWindow').clientHeight
+    this.maxHeight = document.getElementById('chatWindowCyc').clientHeight
     this.imgSrc = src
     jQuery('#imageModal').modal('show')
   }

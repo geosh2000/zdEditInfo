@@ -1,10 +1,12 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { TokenCheckService, WhatsappService } from './services/service.index';
 import { Router } from '@angular/router';
 
 declare var jQuery: any;
 import * as moment from 'moment-timezone';
 import * as Globals from './globals';
+import { InfoClienteComponent } from './components/whatsapp/info-cliente/info-cliente.component';
+import { AssignTicketComponent } from './components/whatsapp/assign-ticket/assign-ticket.component';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +14,13 @@ import * as Globals from './globals';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('chatColumn', {static: false}) _mainColumn:ElementRef;
+  @ViewChild(InfoClienteComponent, {static: false}) _info:InfoClienteComponent
+  @ViewChild(AssignTicketComponent, {static: false}) _assign:AssignTicketComponent
+
   title = 'cycWA';
-  chatSize:any
+  chatSize:any = 200
 
   constructor( public _token:TokenCheckService, public _route:Router, public _wa:WhatsappService) {
     this._wa.zdesk = Globals.ZDESK
@@ -23,8 +30,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(){
     if( this._wa.zdesk ){
-      this.chatSize = jQuery('#chatColumn').innerWidth()
-      console.log(jQuery('#chatColumn'))
+      console.log(this._mainColumn.nativeElement.clientWidth)
+      this.chatSize = this._mainColumn.nativeElement.clientWidth
     }
   }
 
@@ -43,6 +50,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     this._wa.newMsgs = 0
+  }
+
+  openModal( e ){
+    console.log(e)
+    switch(e){
+      case 'info':
+        this._info.openInfo()
+        break
+      case 'assign':
+        this._assign.openAssign()
+        break
+    }
   }
 
 }

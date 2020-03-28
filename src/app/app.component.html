@@ -1,5 +1,5 @@
 <div class='p-0' *ngIf="!_wa.zdesk">
-    <app-navbar></app-navbar>
+    <app-navbar (_link)="openModal($event)"></app-navbar>
     <div [ngClass]="{'whiteBg': isList(_route.url), 'parentWindow': !isList(_route.url)}" *ngIf="_token.token">
         <!-- NavBar -->
         <div class="mainWindow">
@@ -20,22 +20,22 @@
 </div>
 <div class='p-0 zdWindow' *ngIf="_wa.zdesk">
     <div class='row m-0' style="width: 100%; position:absolute">
-        <div class='col-4 p-0' style="border-right: 1px solid; border-color: burlywood;">
-            <app-navbar tipo="conv"></app-navbar>
+        <div class='col-5 p-0' style="border-right: 1px solid; border-color: burlywood;">
+            <app-navbar (_link)="openModal($event)" tipo="conv"></app-navbar>
             <div class='whiteBg'>
                 <div class="mainWindow">
                     <app-conv-list></app-conv-list>
                 </div>
             </div>
         </div>
-        <div class='col-8 p-0' id="chatColumn">
-            <app-navbar tipo="chat"></app-navbar>
+        <div class='col-7 p-0' #chatColumn>
+            <app-navbar (_link)="openModal($event)" tipo="chat"></app-navbar>
             <div class='parentWindow'>
                 <div class="mainWindow">
                     <app-chat-window></app-chat-window>
                 </div>
             </div>
-            <div class="goToBottomButton d-flex justify-content-end pr-3" [style.width.px]="chatSize" *ngIf="_wa.scr > 0">
+            <div class="goToBottomButton d-flex justify-content-end pr-3" [style.width.px]="chatSize" *ngIf="_wa.bottomFlag">
                 <button mat-fab [matBadge]="_wa.newMsgs" [matBadgeHidden]="_wa.newMsgs <= 0" matBadgeColor="warn" matBadgePosition="above" matBadgeOverlap="true" (click)="goBottom()" color="primary" aria-label="Example icon-button with a heart icon">
                     <mat-icon>keyboard_arrow_down</mat-icon>
                 </button>
@@ -46,6 +46,8 @@
         </div>
     </div>
 
+    <app-assign-ticket></app-assign-ticket>
+    <app-info-cliente></app-info-cliente>
     <app-login></app-login>
     <app-logout></app-logout>
     <app-close-ticket></app-close-ticket>

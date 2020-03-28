@@ -11,7 +11,7 @@
         <mat-icon class="" aria-hidden="false" aria-label="Example delete icon" (click)="login()" *ngIf="!_token.token && (tipo == '' || tipo == 'chat')">person_outline</mat-icon>
         <mat-icon [matMenuTriggerFor]="moreConv" *ngIf="_token.token && isChat(_route.url) && tipo == ''">more_vert</mat-icon>
         <mat-icon [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" *ngIf="_init.currentUser && !isChat(_route.url) && tipo == ''">more_vert</mat-icon>
-        <mat-icon [matMenuTriggerFor]="moreConv" *ngIf="_token.token && tipo == 'chat'">more_vert</mat-icon>
+        <mat-icon [matMenuTriggerFor]="moreConv" *ngIf="_token.token && tipo == 'chat' && _wa.chatInfo['rqId']">more_vert</mat-icon>
         <mat-icon [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" *ngIf="_init.currentUser && tipo == 'conv'">more_vert</mat-icon>
 
 
@@ -22,7 +22,7 @@
 <mat-progress-bar *ngIf="_wa.loading" mode="buffer"></mat-progress-bar>
 
 <mat-menu #menu="matMenu">
-    <button mat-menu-item (click)="setFilter(2)">
+    <button mat-menu-item (click)="setFilter('')">
         <mat-icon>speaker_notes</mat-icon>
         <span>Mis Conversaciones</span>
     </button>
@@ -41,11 +41,11 @@
         <mat-icon>shopping_cart</mat-icon>
         <span>Cotizar</span>
     </button> -->
-    <button mat-menu-item (click)="info()">
+    <button mat-menu-item (click)="openModal('info')">
         <mat-icon>info</mat-icon>
         <span>Info Cliente</span>
     </button>
-    <button mat-menu-item (click)="assign()">
+    <button mat-menu-item (click)="openModal('assign')">
         <mat-icon>sync_alt</mat-icon>
         <span>Reasignar</span>
     </button>
@@ -69,5 +69,3 @@
 
     </mat-list>
 </mat-menu>
-<app-info-cliente></app-info-cliente>
-<app-assign-ticket></app-assign-ticket>

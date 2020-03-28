@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { TokenCheckService, InitService, WhatsappService } from '../../services/service.index';
-import { InfoClienteComponent } from '../../components/whatsapp/info-cliente/info-cliente.component';
-import { AssignTicketComponent } from '../../components/whatsapp/assign-ticket/assign-ticket.component';
+
 
 declare var jQuery:any;
 
@@ -14,10 +13,8 @@ declare var jQuery:any;
 })
 export class NavbarComponent implements OnInit {
 
-  @ViewChild(InfoClienteComponent, {static: false}) _info:InfoClienteComponent
-  @ViewChild(AssignTicketComponent, {static: false}) _assign:AssignTicketComponent
-
   @Input() tipo:any = ''
+  @Output() _link = new EventEmitter<any>()
 
   constructor( public _init:InitService, public _token:TokenCheckService, public _wa:WhatsappService, public _route:Router,
                private location: Location) { }
@@ -47,23 +44,20 @@ export class NavbarComponent implements OnInit {
     this.location.back();
   }
 
-  info(){
-    this._info.openInfo()
-  }
-
-  assign(){
-    this._assign.openAssign()
-  }
-
   setFilter( t ){
 
     if( this._wa.zdesk ){
       this._wa.reloadTickets = true
-      this._wa.getTickets( t )
+      this._wa.getTickets( t == '' ? this._init.currentUser['hcInfo']['zdId'] : t )
     }else{
-      this._route.navigate(['/app', t > 1 ? '' : t])
+      this._route.navigate(['/app', t])
     }
 
+  }
+
+  openModal( e ){
+    console.log(e)
+    this._link.emit(e)
   }
 
 

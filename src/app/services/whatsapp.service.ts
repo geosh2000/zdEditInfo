@@ -1,17 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ViewChild } from '@angular/core';
 import { InitService } from './init.service';
 import { ApiService } from './api.service';
 import { OrderPipe } from 'ngx-order-pipe';
 import { ToastrService } from 'ngx-toastr';
 
 declare var jQuery: any;
+import * as Globals from '../globals';
 import * as moment from 'moment-timezone';
 import { FormGroup } from '@angular/forms';
+
+import { Howl } from 'howler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WhatsappService {
+
+  sound = new Howl({
+    src: ['https://cyc-oasishoteles.com/sounds/WhatsApp.mp3'],
+    volume: 1,
+    preload: true
+  });
 
   // Navigation
   lastUrl = '/app'
@@ -22,6 +31,7 @@ export class WhatsappService {
   tickets = []
   timeout:any
   reloadTickets = true
+  selectedFilter:any
 
   // Chat Window
   chatMsgs = {}
@@ -30,6 +40,7 @@ export class WhatsappService {
   newMsgs = 0
   bottomFlag = true
   scr = 0
+  assignee:any
 
   // Attachments
   imageForm: FormGroup
@@ -38,9 +49,13 @@ export class WhatsappService {
   // Layout
   zdesk = false
 
-  constructor( private _init:InitService, private _api:ApiService, private orderPipe: OrderPipe, private toastr:ToastrService ) { }
+  constructor( private _init:InitService, private _api:ApiService, private orderPipe: OrderPipe, private toastr:ToastrService ) {
+    this.zdesk = Globals.ZDESK
+  }
 
   getTickets( s = this._init.currentUser['hcInfo']['zdId'], to = this.reloadTickets ){
+
+    this.selectedFilter = s
 
     if( this.timeout ){
       clearTimeout(this.timeout)
@@ -60,7 +75,7 @@ export class WhatsappService {
         break
     }
 
-    if( !this.reloadTickets ){
+    if( !this.reloadTickets && !this.zdesk ){
       return true
     }
 
@@ -87,7 +102,7 @@ export class WhatsappService {
                   }
 
                   if( notif ){
-                    // this.okNotif(ticketsNot)
+                    this.okNotif(ticketsNot)
                   }
 
                   this.tickets = tkts
@@ -147,6 +162,10 @@ export class WhatsappService {
                   this.chatInfo['rqId'] = res['data'][0]['zdId']
                   this.chatInfo['agentName'] = res['data'][0]['asignado']
                   this.chatInfo['ticketId'] = loc
+
+                  if( this._init.currentUser['hcInfo']['zdId'] == this.assignee && isFocused){
+                    this.clearNotif(loc)
+                  }
                   // let url = 'https://material.angular.io/assets/img/examples/shiba1.jpg'
                   // jQuery('.client-image').css('background-image', 'url(' + url + ')');
 
@@ -193,7 +212,7 @@ export class WhatsappService {
                     jQuery('#note').focus()
                   }
 
-                  if( ft || this.bottomFlag ){
+                  if( ft || !this.bottomFlag ){
                      setTimeout( () => {
                       this.scrollBottom()
                       if(isFocused){
@@ -264,12 +283,46 @@ export class WhatsappService {
 
   scrollBottom(){
 
-    let clh = document.getElementById('chatWindow').clientHeight
-    let dht = document.getElementById('chatWindow').scrollHeight
+    let clh = document.getElementById('chatWindowCyc').clientHeight
+    let dht = document.getElementById('chatWindowCyc').scrollHeight
 
-    document.getElementById('chatWindow').scrollTop = dht - clh
-    this.scr = dht - document.getElementById('chatWindow').scrollTop - clh
+    document.getElementById('chatWindowCyc').scrollTop = dht - clh
+    this.scr = dht - document.getElementById('chatWindowCyc').scrollTop - clh
     this.newMsgs = 0
+    this.bottomFlag = false
+
+    console.log( 'scrolledBottom', 'flag', this.bottomFlag )
 
   }
+
+  clearNotif(t){
+
+    this._api.restfulPut( [t], 'Whatsapp/clearNotif' )
+                .subscribe( res => {
+
+                  console.log('New Notification Done!')
+
+                }, err => {
+                  const error = err.error;
+                  this.toastr.error( error.msg, err.status );
+                  console.error(err.statusText, error.msg);
+
+                });
+  }
+
+  okNotif( t ){
+
+    this._api.restfulPut( t, 'Whatsapp/soundNotif' )
+                .subscribe( res => {
+
+                  console.log('New Notification Done!')
+
+                }, err => {
+                  const error = err.error;
+                  this.toastr.error( error.msg, err.status );
+                  console.error(err.statusText, error.msg);
+
+                });
+  }
+
 }

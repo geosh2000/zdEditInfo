@@ -64,6 +64,8 @@ export class InfoClienteComponent implements OnInit {
     this._api.restfulGet( zdId, 'Calls/showUser' )
                 .subscribe( res => {
 
+                  console.log(res['data']['data'])
+
                   this.loading['userInfo'] = false;
                   this.userInfo['name'] = res['data']['data']['user']['name']
                   this.userInfo['email'] = res['data']['data']['user']['email']
@@ -78,6 +80,7 @@ export class InfoClienteComponent implements OnInit {
 
                   this.originalUserInfo = JSON.parse(JSON.stringify(this.userInfo))
                   this.getRsvHistory()
+                  console.log(res)
 
 
                 }, err => {

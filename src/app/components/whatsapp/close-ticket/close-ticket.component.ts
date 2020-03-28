@@ -38,6 +38,9 @@ export class CloseTicketComponent implements OnInit {
             this._wa.reloadChat = false
             this._wa.chatInfo = {}
             this._wa.chatMsgs = {}
+            this._wa.reloadTickets = true
+            this._wa.getTickets( this._wa.selectedFilter )
+            jQuery('#closeTicketModal').modal('hide')
           }else{
             this._route.navigate([this._wa.lastUrl]);
           }

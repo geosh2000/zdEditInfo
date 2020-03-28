@@ -73,14 +73,20 @@ export class ChatWindowComponent implements OnInit, OnDestroy {
     let scr = e.target.scrollTop
     let dht = e.target.scrollHeight
 
-    if( dht - scr - clh <= 0 ){
+    if( (dht - scr - clh) > 15 ){
+      console.log( 'Show Bottom Button')
       this._wa.bottomFlag = true
       this._wa.newMsgs = 0
     }else{
+      console.log( 'Hide Bottom Button')
       this._wa.bottomFlag = false
     }
 
     this._wa.scr = dht - scr - clh
+
+    // console.log('clh', 'dht', 'scr')
+    // console.log(clh, dht, scr)
+    // console.log(dht - scr - clh)
 
   }
 

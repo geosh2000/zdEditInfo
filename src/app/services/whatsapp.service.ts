@@ -17,7 +17,7 @@ import { Howl } from 'howler';
 export class WhatsappService {
 
   sound = new Howl({
-    src: ['/assets/WhatsApp.mp3'],
+    src: ['/whatsapp/assets/WhatsApp.mp3'],
     volume: 1,
     preload: true
   });
@@ -138,7 +138,7 @@ export class WhatsappService {
 
   getConv( loc, ft = false, to = this.reloadChat, rl = true  ){
 
-    if( this.bottomFlag ){
+    if( !this.bottomFlag ){
       this.newMsgs = 0
     }
 
@@ -208,7 +208,7 @@ export class WhatsappService {
                     }
                   }
 
-                  if( !this.bottomFlag ){
+                  if( this.bottomFlag ){
                     this.newMsgs = msgs
                   }
 

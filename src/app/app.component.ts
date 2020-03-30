@@ -21,6 +21,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   title = 'cycWA';
   chatSize:any = 200
+  resizeTo:any
 
   constructor( public _token:TokenCheckService, public _route:Router, public _wa:WhatsappService) {
     this._wa.zdesk = Globals.ZDESK
@@ -31,8 +32,21 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(){
     if( this._wa.zdesk ){
       console.log(this._mainColumn.nativeElement.clientWidth)
-      this.chatSize = this._mainColumn.nativeElement.clientWidth
+
+      this.resizeChat()
     }
+  }
+
+  resizeChat(){
+    this.chatSize = this._mainColumn.nativeElement.clientWidth
+
+    if( this.resizeTo ){
+      clearTimeout(this.resizeTo)
+    }
+
+    window.setTimeout(() => {
+      this.resizeChat()
+    },1000)
   }
 
   isList( t ){

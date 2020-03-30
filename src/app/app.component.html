@@ -14,9 +14,6 @@
     <div class="footerComponent p-1" id='bottomBar' *ngIf="_token.token && !isList(_route.url)">
         <app-write-msg></app-write-msg>
     </div>
-    <app-login></app-login>
-    <app-logout></app-logout>
-    <app-close-ticket></app-close-ticket>
 </div>
 <div class='p-0 zdWindow' *ngIf="_wa.zdesk">
     <div class='row m-0' style="width: 100%; position:absolute">
@@ -46,9 +43,9 @@
         </div>
     </div>
 
-    <app-assign-ticket></app-assign-ticket>
-    <app-info-cliente></app-info-cliente>
-    <app-login></app-login>
-    <app-logout></app-logout>
-    <app-close-ticket></app-close-ticket>
 </div>
+<app-assign-ticket></app-assign-ticket>
+<app-info-cliente></app-info-cliente>
+<app-login></app-login>
+<app-logout></app-logout>
+<app-close-ticket></app-close-ticket>

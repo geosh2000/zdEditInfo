@@ -58,6 +58,10 @@ export class WriteMsgComponent implements OnInit {
 
   submit( t = this._wa.chatInfo['ticketId'] ){
 
+    if( !this._wa.chatInfo['ticketId'] ){
+      console.error('El ticket no se cargó correctamente. El mensaje no se ha enviado', 'Envío Erróneo');
+    }
+
     this.loading['reading'] = true;
 
     let params = {

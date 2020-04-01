@@ -13,7 +13,7 @@
                         <div class="container d-flex justify-content-center" *ngIf="loading['userInfo'] || loading['savingUI']">
                             <mat-progress-bar mode="buffer"></mat-progress-bar>
                         </div>
-                        <div class="container" *ngIf="!loading['userInfo'] && !loading['savingUI']">
+                        <div class="container" *ngIf="!loading['userInfo'] && !loading['savingUI'] && userInfo['user_fields']">
                             <div class="text-center p-2 pt-4">
                                 <mat-form-field class="formInfo">
                                     <input matInput [(ngModel)]="userInfo['name']" placeholder="Nombre" #name>
@@ -46,6 +46,28 @@
                                 </ng-container>
                                 <br>
                                 <mat-form-field class="formInfo">
+                                    <mat-label>Idioma Usuario</mat-label>
+                                    <mat-select (selectionChange)="selectedLang($event)" [value]="userInfo['user_fields']['idioma_cliente']">
+                                        <ng-container *ngFor="let lang of idiomas">
+                                            <mat-option [value]="lang['lang']">
+                                                {{ lang['idioma'] }}
+                                            </mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+                                <ng-container *ngIf="loading['phone_number']">
+                                    <mat-progress-bar mode="buffer"></mat-progress-bar>
+                                </ng-container>
+                                <ng-container *ngIf="!loading['lang']">
+                                    <button mat-icon-button color="accent" (click)="userInfo['user_fields']['idioma_cliente'] = originalUserInfo['user_fields']['idioma_cliente']" *ngIf="originalUserInfo['user_fields']['idioma_cliente'] != userInfo['user_fields']['idioma_cliente']">
+                                        <mat-icon>close</mat-icon>
+                                    </button>
+                                    <button mat-icon-button color="primary" (click)="saveUserInfo('user_fields')" *ngIf="originalUserInfo['user_fields']['idioma_cliente'] != userInfo['user_fields']['idioma_cliente']">
+                                        <mat-icon>save</mat-icon>
+                                    </button>
+                                </ng-container>
+                                <br>
+                                <mat-form-field class="formInfo">
                                     <input matInput [(ngModel)]="userInfo['phone']" placeholder="Teléfono" #phone>
                                 </mat-form-field>
                                 <ng-container *ngIf="loading['phone_number']">
@@ -61,16 +83,16 @@
                                 </ng-container>
                                 <br>
                                 <mat-form-field class="formInfo">
-                                    <input matInput [(ngModel)]="userInfo['whatsapp']" placeholder="Whatsapp" #whatsapp>
+                                    <input matInput [(ngModel)]="userInfo['user_fields']['whatsapp']" placeholder="Whatsapp" #whatsapp>
                                 </mat-form-field>
                                 <ng-container *ngIf="loading['whatsapp']">
                                     <mat-progress-bar mode="buffer"></mat-progress-bar>
                                 </ng-container>
                                 <ng-container *ngIf="!loading['whatsapp']">
-                                    <button mat-icon-button color="accent" (click)="userInfo['whatsapp'] = originalUserInfo['whatsapp']" *ngIf="originalUserInfo['whatsapp'] != userInfo['whatsapp']">
+                                    <button mat-icon-button color="accent" (click)="userInfo['user_fields']['whatsapp'] = originalUserInfo['user_fields']['whatsapp']" *ngIf="originalUserInfo['user_fields']['whatsapp'] != userInfo['user_fields']['whatsapp']">
                                         <mat-icon>close</mat-icon>
                                     </button>
-                                    <button mat-icon-button color="primary" (click)="saveUserInfo('whatsapp')" *ngIf="originalUserInfo['whatsapp'] != userInfo['whatsapp']">
+                                    <button mat-icon-button color="primary" (click)="saveUserInfo('user_fields')" *ngIf="originalUserInfo['user_fields']['whatsapp'] != userInfo['user_fields']['whatsapp']">
                                         <mat-icon>save</mat-icon>
                                     </button>
                                 </ng-container>

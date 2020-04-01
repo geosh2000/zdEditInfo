@@ -17,12 +17,19 @@ export class InfoClienteComponent implements OnInit {
   userInfo = {}
   originalUserInfo = {}
 
-  constructor( public _wa:WhatsappService, private _init:InitService, private _api:ApiService, private toastr:ToastrService ) { }
+  idiomas:Object = [
+    {idioma: 'español', lang: 'idioma_es'},
+    {idioma: 'inglés', lang: 'idioma_en'},
+    {idioma: 'francés', lang: 'idioma_fr'},
+    {idioma: 'portugués', lang: 'idioma_pt'}
+  ]
 
-  ngOnInit() {
+constructor( public _wa:WhatsappService, private _init:InitService, private _api:ApiService, private toastr:ToastrService ) { }
+
+ngOnInit() {
   }
 
-  openInfo(){
+openInfo(){
     this.rsvHistory = []
     this.userInfo = {}
     this.originalUserInfo = {}
@@ -30,14 +37,14 @@ export class InfoClienteComponent implements OnInit {
     this.getUserInfo()
   }
 
-  tabSelected( e ){
+tabSelected( e ){
     console.log(e.tab.textLabel)
     if( e.tab.textLabel == 'Reservas' ){
       this.getRsvHistory()
     }
   }
 
-  saveUserInfo(f){
+saveUserInfo(f){
     this.loading['savingUI'] = true;
 
     this._api.restfulPut( {values: this.userInfo, field: f}, 'Calls/updateUserV2' )
@@ -56,7 +63,7 @@ export class InfoClienteComponent implements OnInit {
                 });
   }
 
-  getUserInfo( zdId = this._wa.chatInfo['rqId'] ){
+getUserInfo( zdId = this._wa.chatInfo['rqId'] ){
     this.loading['userInfo'] = true;
     this.userInfo = {}
     this.originalUserInfo = {}
@@ -64,13 +71,14 @@ export class InfoClienteComponent implements OnInit {
     this._api.restfulGet( zdId, 'Calls/showUser' )
                 .subscribe( res => {
 
-                  console.log(res['data']['data'])
+                  // console.log(res['data']['data'])
 
                   this.loading['userInfo'] = false;
                   this.userInfo['name'] = res['data']['data']['user']['name']
                   this.userInfo['email'] = res['data']['data']['user']['email']
                   this.userInfo['phone'] = res['data']['data']['user']['phone']
                   this.userInfo['rqId'] = zdId
+                  this.userInfo['user_fields'] = res['data']['data']['user']['user_fields']
 
                   if( res['data']['data']['user']['user_fields'] && res['data']['data']['user']['user_fields'] ){
                     this.userInfo['whatsapp'] = res['data']['data']['user']['user_fields']['whatsapp'] ? res['data']['data']['user']['user_fields']['whatsapp'] : ''
@@ -93,7 +101,7 @@ export class InfoClienteComponent implements OnInit {
                 });
   }
 
-  getRsvHistory( zdClientId = this._wa.chatInfo['rqId'] ){
+getRsvHistory( zdClientId = this._wa.chatInfo['rqId'] ){
 
     this.loading['rsvHistory'] = true
     this.rsvHistory = []
@@ -112,6 +120,11 @@ export class InfoClienteComponent implements OnInit {
                   console.error(err.statusText, error.msg);
 
                 });
+  }
+
+selectedLang(e){
+    this.userInfo['user_fields']['idioma_cliente'] = e.value
+    console.log(this.userInfo)
   }
 
 }

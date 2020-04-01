@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
-import { TokenCheckService, InitService, WhatsappService } from '../../services/service.index';
+import { TokenCheckService, InitService } from '../../services/service.index';
 
 
 declare var jQuery:any;
@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
   @Input() tipo:any = ''
   @Output() _link = new EventEmitter<any>()
 
-  constructor( public _init:InitService, public _token:TokenCheckService, public _wa:WhatsappService, public _route:Router,
+  constructor( public _init:InitService, public _token:TokenCheckService, public _route:Router,
                private location: Location) { }
 
   ngOnInit() {
@@ -42,17 +42,6 @@ export class NavbarComponent implements OnInit {
 
   goBack() {
     this.location.back();
-  }
-
-  setFilter( t ){
-
-    if( this._wa.zdesk ){
-      this._wa.reloadTickets = true
-      this._wa.getTickets( t == '' ? this._init.currentUser['hcInfo']['zdId'] : t )
-    }else{
-      this._route.navigate(['/app', t])
-    }
-
   }
 
   openModal( e ){

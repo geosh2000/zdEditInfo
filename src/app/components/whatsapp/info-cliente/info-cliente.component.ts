@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { InitService, ApiService, WhatsappService } from '../../../services/service.index';
+import { InitService, ApiService } from '../../../services/service.index';
 
 import * as moment from 'moment-timezone';
 import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 declare var jQuery: any;
 
 @Component({
@@ -16,6 +17,7 @@ export class InfoClienteComponent implements OnInit {
   rsvHistory = []
   userInfo = {}
   originalUserInfo = {}
+  userId = 0
 
   idiomas:Object = [
     {idioma: 'español', lang: 'idioma_es'},
@@ -24,10 +26,30 @@ export class InfoClienteComponent implements OnInit {
     {idioma: 'portugués', lang: 'idioma_pt'}
   ]
 
-constructor( public _wa:WhatsappService, private _init:InitService, private _api:ApiService, private toastr:ToastrService ) { }
+constructor( private activatedRoute: ActivatedRoute, private _init:InitService, private _api:ApiService, private toastr:ToastrService ) {
+
+  this.activatedRoute.params.subscribe( params => {
+
+      if ( params.id ){
+        this.userId = params.id
+        this.getUserInfo( params.id )
+      }else{
+        this.userId = 0
+        this.rsvHistory = []
+        this.userInfo = {}
+        this.originalUserInfo = {}
+      }
+
+  });
+
+}
 
 ngOnInit() {
   }
+
+isValid( e ){
+  return jQuery(e).hasClass('ng-valid')
+}
 
 openInfo(){
     this.rsvHistory = []
@@ -45,6 +67,7 @@ tabSelected( e ){
   }
 
 saveUserInfo(f){
+
     this.loading['savingUI'] = true;
 
     this._api.restfulPut( {values: this.userInfo, field: f}, 'Calls/updateUserV2' )
@@ -63,7 +86,7 @@ saveUserInfo(f){
                 });
   }
 
-getUserInfo( zdId = this._wa.chatInfo['rqId'] ){
+getUserInfo( zdId = this.userId ){
     this.loading['userInfo'] = true;
     this.userInfo = {}
     this.originalUserInfo = {}
@@ -101,7 +124,7 @@ getUserInfo( zdId = this._wa.chatInfo['rqId'] ){
                 });
   }
 
-getRsvHistory( zdClientId = this._wa.chatInfo['rqId'] ){
+getRsvHistory( zdClientId = this.userId ){
 
     this.loading['rsvHistory'] = true
     this.rsvHistory = []

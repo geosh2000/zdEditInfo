@@ -1,20 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { WhatsappComponent } from './components/whatsapp/whatsapp.component';
-import { ConvListComponent } from './components/whatsapp/conv-list/conv-list.component';
-import { ChatWindowComponent } from './components/whatsapp/chat-window/chat-window.component';
+import { InfoClienteComponent } from './components/whatsapp/info-cliente/info-cliente.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/app', pathMatch: 'full' },
 
-  { path: 'app', component: ConvListComponent },
-  { path: 'app/:id', component: ConvListComponent },
+  { path: 'user', component: InfoClienteComponent },
+  { path: 'user/:id', component: InfoClienteComponent },
+  // { path: 'app', component: ConvListComponent },
+  // { path: 'app/:id', component: ConvListComponent },
 
-  { path: 'chat/:tkt', component: ChatWindowComponent },
+  // { path: 'chat/:tkt', component: ChatWindowComponent },
 
   // zendeskInit
-  { path: 'whatsapp/:zdUser', component: ConvListComponent },
+  // { path: 'whatsapp/:zdUser', component: ConvListComponent },
 ];
 
 @NgModule({

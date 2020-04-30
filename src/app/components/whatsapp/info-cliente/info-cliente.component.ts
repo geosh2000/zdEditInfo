@@ -18,6 +18,9 @@ export class InfoClienteComponent implements OnInit {
   userInfo = {}
   originalUserInfo = {}
   userId = 0
+  noEdit = false
+  isDpl = false
+  dpl = []
 
   idiomas:Object = [
     {idioma: 'español', lang: 'idioma_es'},
@@ -74,7 +77,33 @@ saveUserInfo(f){
                 .subscribe( res => {
 
                   this.loading['savingUI'] = false;
-                  this.getUserInfo()
+                  let rsp = res['rsp']
+
+                  if( rsp['response'] != 200 ){
+
+                    let err = rsp['data']
+                    let msg = ''
+                    let errType = ''
+
+                    for( let fld in err['details'] ){
+                      if( err['details'].hasOwnProperty(fld) ){
+                        for( let e of err['details'][fld] ){
+                          msg += ` ${e['description']} (${e['error']})`
+                          errType = e['error']
+                        }
+                      }
+                    }
+
+                    if( errType == 'DuplicateValue' ){
+                      this.isDpl = true
+                      this.dpl = err['user']
+                    }
+
+                    this.toastr.error( msg, err['description'] );
+                  }else{
+                    this.toastr.success( 'Información guardada correctamente', 'Guardado' );
+                    this.getUserInfo()
+                  }
 
                 }, err => {
                   this.loading['savingUI'] = false;
@@ -87,6 +116,7 @@ saveUserInfo(f){
   }
 
 getUserInfo( zdId = this.userId ){
+    this.noEdit = false
     this.loading['userInfo'] = true;
     this.userInfo = {}
     this.originalUserInfo = {}
@@ -107,6 +137,10 @@ getUserInfo( zdId = this.userId ){
                     this.userInfo['whatsapp'] = res['data']['data']['user']['user_fields']['whatsapp'] ? res['data']['data']['user']['user_fields']['whatsapp'] : ''
                   }else{
                     this.userInfo['whatsapp'] = ''
+                  }
+
+                  if( res['data']['data']['user']['tags'].indexOf('noedit') >= 0 ){
+                    this.noEdit = true
                   }
 
                   this.originalUserInfo = JSON.parse(JSON.stringify(this.userInfo))
@@ -148,6 +182,33 @@ getRsvHistory( zdClientId = this.userId ){
 selectedLang(e){
     this.userInfo['user_fields']['idioma_cliente'] = e.value
     console.log(this.userInfo)
+  }
+
+  mergeUsers( c, d ){
+    this.loading = true
+    this._api.restfulPut( {actual: c, dest: d, userFields: this.userInfo['user_fields'], flag: true }, 'Whatsapp/mergeUsers' )
+                .subscribe( res => {
+
+                  this.loading = false;
+
+                  if( res['data']['response'] == 200 ){
+                    this.getUserInfo(d)
+                    this.toastr.success('Usuarios fusionados correctamente', 'Fusión Realizada')
+                    this.isDpl = false
+                    this.dpl = []
+                  }else{
+                    this.toastr.error(res['data']['data']['error'], 'Error')
+                  }
+
+
+                }, err => {
+                  this.loading = false;
+
+                  const error = err.error;
+                  this.toastr.error( error.msg, err.status );
+                  console.error(err.statusText, error.msg);
+
+                });
   }
 
 }

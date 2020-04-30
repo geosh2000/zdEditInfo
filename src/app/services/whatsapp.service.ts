@@ -40,6 +40,8 @@ export class WhatsappService {
   bottomFlag = true
   scr = 0
   assignee:any
+  actualTkt:any
+  lastIsIn:any
 
   // Attachments
   imageForm: FormGroup
@@ -47,6 +49,15 @@ export class WhatsappService {
 
   // Layout
   zdesk = false
+
+  // INFO
+  userInfo = {}
+  originalUserInfo = {}
+  rsvHistory = []
+  loadingInfo = false
+  loadingUI = false
+  dpl = {}
+  isDpl = false
 
   constructor( private _init:InitService, private _api:ApiService, private orderPipe: OrderPipe, private toastr:ToastrService ) {
     this.zdesk = Globals.ZDESK
@@ -330,5 +341,6 @@ export class WhatsappService {
 
                 });
   }
+
 
 }

@@ -8,8 +8,11 @@
           </button>
             </div> -->
 <div>
-    <mat-tab-group (selectedTabChange)="tabSelected($event)">
+    <mat-tab-group (selectedTabChange)="tabSelected($event)" *ngIf="!isDpl">
         <mat-tab label="Perfil">
+            <div class="alert alert-danger text-center" role="alert" *ngIf="noEdit">
+                Este usuario no puede ser modificado
+            </div>
             <div class="container d-flex justify-content-center" *ngIf="loading['userInfo'] || loading['savingUI']">
                 <mat-progress-bar mode="buffer"></mat-progress-bar>
             </div>
@@ -22,10 +25,10 @@
                         <mat-progress-bar mode="buffer"></mat-progress-bar>
                     </ng-container>
                     <ng-container *ngIf="!loading['name']">
-                        <button mat-icon-button color="accent" (click)="userInfo['name'] = originalUserInfo['name']" [disabled]="!(originalUserInfo['name'] != userInfo['name'])">
+                        <button mat-icon-button color="accent" (click)="userInfo['name'] = originalUserInfo['name']" [disabled]="noEdit || !(originalUserInfo['name'] != userInfo['name'])">
                                         <mat-icon>close</mat-icon>
                                     </button>
-                        <button mat-icon-button color="primary" (click)="saveUserInfo('name')" [disabled]="!(originalUserInfo['name'] != userInfo['name'])">
+                        <button mat-icon-button color="primary" (click)="saveUserInfo('name')" [disabled]="noEdit || !(originalUserInfo['name'] != userInfo['name'])">
                                         <mat-icon>save</mat-icon>
                                     </button>
                     </ng-container>
@@ -37,10 +40,10 @@
                         <mat-progress-bar mode="buffer"></mat-progress-bar>
                     </ng-container>
                     <ng-container *ngIf="!loading['email']">
-                        <button mat-icon-button color="accent" (click)="userInfo['email'] = originalUserInfo['email']" [disabled]="!(originalUserInfo['email'] != userInfo['email'])">
+                        <button mat-icon-button color="accent" (click)="userInfo['email'] = originalUserInfo['email']" [disabled]="noEdit || !(originalUserInfo['email'] != userInfo['email'])">
                                         <mat-icon>close</mat-icon>
                                     </button>
-                        <button mat-icon-button color="primary" (click)="saveUserInfo('email')" [disabled]="!isValid(email) && !(originalUserInfo['email'] != userInfo['email'])">
+                        <button mat-icon-button color="primary" (click)="saveUserInfo('email')" [disabled]="noEdit || !isValid(email) || !(originalUserInfo['email'] != userInfo['email'])">
                                         <mat-icon>save</mat-icon>
                                     </button>
                     </ng-container>
@@ -59,40 +62,40 @@
                         <mat-progress-bar mode="buffer"></mat-progress-bar>
                     </ng-container>
                     <ng-container *ngIf="!loading['lang']">
-                        <button mat-icon-button color="accent" (click)="userInfo['user_fields']['idioma_cliente'] = originalUserInfo['user_fields']['idioma_cliente']" [disabled]="!(originalUserInfo['user_fields']['idioma_cliente'] != userInfo['user_fields']['idioma_cliente'])">
+                        <button mat-icon-button color="accent" (click)="userInfo['user_fields']['idioma_cliente'] = originalUserInfo['user_fields']['idioma_cliente']" [disabled]="noEdit || !(originalUserInfo['user_fields']['idioma_cliente'] != userInfo['user_fields']['idioma_cliente'])">
                                         <mat-icon>close</mat-icon>
                                     </button>
-                        <button mat-icon-button color="primary" (click)="saveUserInfo('user_fields')" [disabled]="!(originalUserInfo['user_fields']['idioma_cliente'] != userInfo['user_fields']['idioma_cliente'])">
+                        <button mat-icon-button color="primary" (click)="saveUserInfo('user_fields')" [disabled]="noEdit || !(originalUserInfo['user_fields']['idioma_cliente'] != userInfo['user_fields']['idioma_cliente'])">
                                         <mat-icon>save</mat-icon>
                                     </button>
                     </ng-container>
                     <br>
                     <mat-form-field class="formInfo">
-                        <input matInput [(ngModel)]="userInfo['phone']" placeholder="Teléfono" #phone pattern="^(\\+){1}[1-9]\\d{10,14}$">
+                        <input matInput [(ngModel)]="userInfo['phone']" placeholder="Teléfono" #phone pattern="^(\+){1}[1-9]\d{10,14}$">
                     </mat-form-field>
                     <ng-container *ngIf="loading['phone_number']">
                         <mat-progress-bar mode="buffer"></mat-progress-bar>
                     </ng-container>
                     <ng-container *ngIf="!loading['phone_number']">
-                        <button mat-icon-button color="accent" (click)="userInfo['phone'] = originalUserInfo['phone']" [disabled]="!(originalUserInfo['phone'] != userInfo['phone'])">
+                        <button mat-icon-button color="accent" (click)="userInfo['phone'] = originalUserInfo['phone']" [disabled]="noEdit || !(originalUserInfo['phone'] != userInfo['phone'])">
                                         <mat-icon>close</mat-icon>
                                     </button>
-                        <button mat-icon-button color="primary" (click)="saveUserInfo('phone_number')" [disabled]="!isValid(phone) && !(originalUserInfo['phone'] != userInfo['phone'])">
+                        <button mat-icon-button color="primary" (click)="saveUserInfo('phone_number')" [disabled]="noEdit || !isValid(phone) || !(originalUserInfo['phone'] != userInfo['phone'])">
                                         <mat-icon>save</mat-icon>
                                     </button>
                     </ng-container>
                     <br>
                     <mat-form-field class="formInfo">
-                        <input matInput [(ngModel)]="userInfo['user_fields']['whatsapp']" placeholder="Whatsapp" #whatsapp pattern="^(\\+){1}[1-9]\\d{10,14}$">
+                        <input matInput [(ngModel)]="userInfo['user_fields']['whatsapp']" placeholder="Whatsapp" #whatsapp pattern="^(\+){1}[1-9]\d{10,14}$">
                     </mat-form-field>
                     <ng-container *ngIf="loading['whatsapp']">
                         <mat-progress-bar mode="buffer"></mat-progress-bar>
                     </ng-container>
                     <ng-container *ngIf="!loading['whatsapp']">
-                        <button mat-icon-button color="accent" (click)="userInfo['user_fields']['whatsapp'] = originalUserInfo['user_fields']['whatsapp']" [disabled]="!(originalUserInfo['user_fields']['whatsapp'] != userInfo['user_fields']['whatsapp'])">
+                        <button mat-icon-button color="accent" (click)="userInfo['user_fields']['whatsapp'] = originalUserInfo['user_fields']['whatsapp']" [disabled]="noEdit || !(originalUserInfo['user_fields']['whatsapp'] != userInfo['user_fields']['whatsapp'])">
                                         <mat-icon>close</mat-icon>
                                     </button>
-                        <button mat-icon-button color="primary" (click)="saveUserInfo('user_fields')" [disabled]="!isValid(whatsapp) && !(originalUserInfo['user_fields']['whatsapp'] != userInfo['user_fields']['whatsapp'])">
+                        <button mat-icon-button color="primary" (click)="saveUserInfo('user_fields')" [disabled]="noEdit || !isValid(whatsapp) || !(originalUserInfo['user_fields']['whatsapp'] != userInfo['user_fields']['whatsapp'])">
                                         <mat-icon>save</mat-icon>
                                     </button>
                     </ng-container>
@@ -125,6 +128,21 @@
             </div>
         </mat-tab>
     </mat-tab-group>
+    <div class="alert alert-warning" role="alert" *ngIf="isDpl">
+        <p>Los datos se encuentran duplicados con el usuario siguiente:</p>
+        <p>Nombre: {{ dpl['name'] }}</p>
+        <p>Correo: {{ dpl['email'] }}</p>
+        <p>Tel: {{ dpl['phone'] }}</p>
+        <br>
+        <p>Deseas fusionarlos? <button mat-icon-button color='warn' (click)="isDpl = false">
+            <mat-icon>close</mat-icon>
+        </button><button mat-icon-button color='primary' (click)="mergeUsers(userInfo['rqId'],dpl['id'])">
+            <mat-icon>check</mat-icon>
+        </button></p>
+    </div>
+    <div class="container d-flex justify-content-end">
+        <button mat-raised-button (click)="getUserInfo()">Refresh</button>
+    </div>
 
 </div>
 <!-- </div>
